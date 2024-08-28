@@ -189,3 +189,13 @@ ob_start();
 $content = ob_get_clean();
 include './views/layout.php';
 ?>
+
+
+<script>
+document.getElementById('cpf').addEventListener('input', function() {
+    const cpf = this.value;
+    if (cpf.length === 14) { // Verifica se o CPF completo foi inserido
+        checkCpf(cpf);
+    }
+});
+</script>

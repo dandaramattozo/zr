@@ -117,3 +117,115 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+/// CPF NOVOOOO
+
+function isValidCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+        return false;
+    }
+    let sum = 0;
+    let remainder;
+    for (let i = 1; i <= 9; i++) {
+        sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) {
+        remainder = 0;
+    }
+    if (remainder !== parseInt(cpf.substring(9, 10))) {
+        return false;
+    }
+    sum = 0;
+    for (let i = 1; i <= 10; i++) {
+        sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) {
+        remainder = 0;
+    }
+    if (remainder !== parseInt(cpf.substring(10, 11))) {
+        return false;
+    }
+    return true;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cpfInput = document.getElementById('cpf');
+    const form = document.querySelector('form');
+
+    function handleFormSubmission(event) {
+        const cpf = cpfInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        if (!isValidCPF(cpf)) {
+            event.preventDefault(); // Previne o envio do formulário
+            cpfInput.classList.add('is-invalid');
+            const toastBody = document.getElementById('toast-body');
+            toastBody.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
+            const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+            toast.show();
+        } else {
+            cpfInput.classList.remove('is-invalid');
+        }
+    }
+
+    form.addEventListener('submit', handleFormSubmission);
+});
+
+
+// Verificação se o cpf é existe
+$(document).ready(function() {
+    $('#cpf').on('blur', function() {
+        var cpf = $(this).val();
+
+        // Validar o CPF
+        if (CPF.isValid(cpf)) {
+            // CPF é válido, agora verificar se já existe
+            $.ajax({
+                url: '/check-cpf',
+                type: 'GET',
+                data: { cpf: cpf },
+                success: function(response) {
+                    // Supondo que o endpoint retorna um JSON com um campo 'exists'
+                    if (response.exists) {
+                        $('#cpf').addClass('is-invalid');
+                        $('#cpf').siblings('.invalid-feedback').text('Este CPF já está cadastrado.');
+                    } else {
+                        $('#cpf').removeClass('is-invalid').addClass('is-valid');
+                        $('#cpf').siblings('.invalid-feedback').text('');
+                    }
+                },
+                error: function() {
+                    $('#cpf').addClass('is-invalid');
+                    $('#cpf').siblings('.invalid-feedback').text('Erro ao verificar o CPF.');
+                }
+            });
+        } else {
+            $('#cpf').addClass('is-invalid');
+            $('#cpf').siblings('.invalid-feedback').text('CPF inválido.');
+        }
+    });
+});
+
+
+// novo
+function checkCpf(cpf) {
+    $.ajax({
+        url: '/controllers/checkCpfController.php', // Ajuste este caminho conforme necessário
+        type: 'GET',
+        data: { cpf: cpf },
+        success: function(response) {
+            const data = JSON.parse(response);
+            if (data.exists) {
+                alert('O CPF já está cadastrado.');
+            } else {
+                alert('O CPF está disponível.');
+            }
+        },
+        error: function() {
+            alert('Erro ao verificar o CPF.');
+        }
+    });
+}

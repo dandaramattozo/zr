@@ -72,5 +72,15 @@ class Client extends Database {
         return $stmt;
     }
 
+    public function exists($cpf) {
+        $query = "SELECT COUNT(*) as count FROM clients WHERE cpf = :cpf";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':cpf', $cpf);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['count'] > 0;
+    }
+    
+
 
 }

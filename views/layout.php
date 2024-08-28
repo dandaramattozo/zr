@@ -19,13 +19,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js" integrity="sha512-F5Ul1uuyFlGnIT1dk2c4kB4DBdi5wnBJjVhL7gQlGh46Xn0VhvD8kgxLtjdZ5YN83gybk/aASUAlpdoWUjRR3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- Chame o DataTables e o Reorder -->
+    <script src="https://cdn.jsdelivr.net/npm/cpf-cnpj-validator@4.0.2/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cpf-cnpj-validator@4.0.3/dist/index.min.js"></script>
+
+
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
     
     <script src="./assets/js/scripts.js?v=<?=time()?>"></script> <!-- JS customizado -->
-
 
 </body>
 </html>
