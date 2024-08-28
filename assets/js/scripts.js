@@ -229,3 +229,20 @@ function checkCpf(cpf) {
         }
     });
 }
+
+
+$(document).ready(function() {
+    $('#birth').on('blur', function() {
+        const inputDate = new Date($(this).val());
+        const today = new Date();
+
+        // Verifica se a data inserida é posterior ao dia de hoje
+        if (inputDate > today) {
+            $('#birth').addClass('is-invalid');
+            $('#birth').siblings('.invalid-feedback').text('A data de nascimento não pode ser futura.');
+        } else {
+            $('#birth').removeClass('is-invalid').addClass('is-valid');
+            $('#birth').siblings('.invalid-feedback').text('');
+        }
+    });
+});

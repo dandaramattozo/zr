@@ -93,6 +93,9 @@ ob_start();
         <div class="mb-3">
             <label for="birth" class="form-label">Data de Nascimento</label>
             <input type="date" class="form-control" id="birth" name="birth" required>
+            <div class="invalid-feedback">
+                A data de nascimento não pode ser posterior a data de hoje!
+            </div>
         </div>
     </div>
     <div class="col-md-4">
