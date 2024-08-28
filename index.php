@@ -4,6 +4,7 @@ require_once "./models/Client.php";
 
 $message = '';
 $messageType = '';
+$emailError = ''; // Variável para armazenar o erro de e-mail
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new Database();
@@ -28,13 +29,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $client->phone = $_POST['phone'];
     $client->email = $_POST['email'];
 
-    if ($client->create()) {
-        $message = "Cliente cadastrado com sucesso!";
-        $messageType = 'success'; // Sucesso
+
+    // Validação de e-mail
+    if (!filter_var($client->email, FILTER_VALIDATE_EMAIL)) {
+        $emailError = "E-mail inválido."; // Definir erro específico para o campo de e-mail
+        $messageType = 'error'; // Definir o tipo de erro global
     } else {
-        $message = "Erro ao cadastrar cliente.";
-        $messageType = 'error'; // Erro
+        // Se o e-mail for válido, prosseguir com o cadastro do cliente
+        if ($client->create()) {
+            $message = "Cliente cadastrado com sucesso!";
+            $messageType = 'success'; // Sucesso
+        } else {
+            $message = "Erro ao cadastrar cliente.";
+            $messageType = 'error'; // Erro
+        }
     }
+
+
 }
 
 
@@ -94,7 +105,7 @@ ob_start();
             <label for="birth" class="form-label">Data de Nascimento</label>
             <input type="date" class="form-control" id="birth" name="birth" required>
             <div class="invalid-feedback">
-                A data de nascimento não pode ser posterior a data de hoje!
+                A data de nascimento não pode ser futura.
             </div>
         </div>
     </div>
@@ -118,9 +129,16 @@ ob_start();
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" name="email" required>
+                <input type="email" class="form-control <?php echo $emailError ? 'is-invalid' : ''; ?>" name="email" value="<?php echo htmlspecialchars($client->email ?? '', ENT_QUOTES); ?>" required>
+                <div class="invalid-feedback">
+                    <?php echo $emailError; ?> <!-- Exibe o erro de e-mail -->
+                </div>
             </div>
         </div>
+
+
+  
+
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="phone" class="form-label">Telefone</label>
