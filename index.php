@@ -45,9 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-
 }
-
 
 
 $pageTitle = "Cadastrar Cliente";
@@ -131,13 +129,10 @@ ob_start();
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" class="form-control <?php echo $emailError ? 'is-invalid' : ''; ?>" name="email" value="<?php echo htmlspecialchars($client->email ?? '', ENT_QUOTES); ?>" required>
                 <div class="invalid-feedback">
-                    <?php echo $emailError; ?> <!-- Exibe o erro de e-mail -->
+                    <?php echo $emailError; ?>
                 </div>
             </div>
         </div>
-
-
-  
 
         <div class="col-md-6">
             <div class="mb-3">

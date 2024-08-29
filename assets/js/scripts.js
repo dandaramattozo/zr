@@ -245,3 +245,13 @@ $(document).ready(function() {
         }
     });
 });
+
+
+$(document).ready(function() {
+    Inputmask({
+        mask: ['(99) 9999-9999', '(99) 99999-9999'], 
+        keepStatic: true,  // Força o uso da máscara correta conforme o número de dígitos
+        showMaskOnHover: false,  
+        showMaskOnFocus: false  
+    }).mask('input[name="phone"]');
+});
